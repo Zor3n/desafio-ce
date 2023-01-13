@@ -62,6 +62,10 @@ class ReservationController extends Controller
             if ($selected_user_time < $minimum_margin_time) {
                 return redirect('reservation')->with(['updates' => 'Por favor, seleccione una fecha apropiada con un margen de dos horas', 'class' => 'alert-danger']);
             }
+
+            if ($this -> checkAppointmentDate($request->meetingTime) == false) {
+                return redirect('reservation')->with(['updates' => 'Fecha ingresada no disponible', 'class' => 'alert-danger']);
+            }
             
             $consulta->date = $request->meetingTime;
             $consulta->state = 0;
@@ -131,6 +135,10 @@ class ReservationController extends Controller
             if ($current_time > $check_date) {
                 return redirect('reservation')->with(['updates' => 'No se puede actualizar la fecha', 'class' => 'alert-danger']);
             }
+
+            if ($this -> checkAppointmentDate($request->updateMeetingTime) == false) {
+                return redirect('reservation')->with(['updates' => 'Fecha ingresada no disponible', 'class' => 'alert-danger']);
+            }
             
             $consulta->date = $request->updateMeetingTime;
             $consulta->state = 0;
@@ -156,6 +164,20 @@ class ReservationController extends Controller
             return redirect('reservation')->with(['updates' => 'Registro eliminado correctamente', 'class' => 'alert-success']);
         } catch (\Throwable $th) {
             return redirect('reservation')->with(['updates' => 'Registro NO se ha eliminado.', 'class' => 'alert-danger']);
+        }
+    }
+
+    private static function checkAppointmentDate($date){
+        try {
+            $format_date = date('Y-m-d H:i', strtotime($date));
+            $consulta = Appointment::where('date', '=', $format_date);
+            
+            if($consulta -> count() > 0){
+                return false;
+            }
+            return true;
+        } catch (\Throwable $th) {
+            return false;
         }
     }
 }

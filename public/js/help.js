@@ -15,20 +15,10 @@ function deleteAppointment(id, cc, name, date, url) {
   document.getElementById("deleteForm").action = url+"/"+id;
 }
 
-function checkUpdateData(params) {
+function updateAppointmentDataCheck(params) {
     
 }
 
 function saveAppointmentDataCheck(params) {
 
-}
-
-const toastTrigger = document.getElementById('liveToastBtn')
-const toastLiveExample = document.getElementById('liveToast')
-if (toastTrigger) {
-  toastTrigger.addEventListener('click', () => {
-    const toast = new bootstrap.Toast(toastLiveExample)
-
-    toast.show()
-  })
 }

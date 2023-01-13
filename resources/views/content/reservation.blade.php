@@ -136,7 +136,7 @@ $last_date = date('Y-m-d H:i', strtotime('+1 month', strtotime($current_date)));
                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                             aria-label="Close"></button>
                     </div>
-                    <form id="updateForm" method="POST" onsubmit="return checkUpdateData();">
+                    <form id="updateForm" method="POST" onsubmit="return updateAppointmentDataCheck();">
                         <div class="modal-body">
                             @method('PUT')
                             <div class="row">
