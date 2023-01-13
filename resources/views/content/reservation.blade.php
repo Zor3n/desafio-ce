@@ -236,14 +236,6 @@ $last_date = date('Y-m-d H:i', strtotime('+1 month', strtotime($current_date)));
                 </div>
             </div>
         </div>
-        @if (session('savesAlert'))
-            <div id="savesAlert" class="alert alert-dismissible fade show {{ session('class') }}" role="alert">
-                {{ session('savesAlert') }}
-                <button type="button" class="btn btn-close ms-5 bg-secondary" data-bs-dismiss="alert"
-                    aria-label="Close">{{ __('Cerrar') }}</button>
-            </div>
-        @endif
-
         @if (session('updates'))
             <div id="updatesAlert" class="alert alert-dismissible fade show {{ session('class') }}" role="alert">
                 {{ session('updates') }}

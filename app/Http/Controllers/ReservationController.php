@@ -57,13 +57,10 @@ class ReservationController extends Controller
             $consulta->pet_name = $request->userPetName;
 
             $selected_user_time = strtotime($request->meetingTime);
-            $current_time = strtotime(date('Y-m-d H:i'));
             $minimum_margin_time = strtotime(date('Y-m-d H:i', strtotime('2 hour')));
 
-            if($selected_user_time < $current_time){
-                return redirect('reservation')->with(['savesAlert' => 'Por favor, seleccione una fecha apropiada', 'class' => 'alert-danger']);
-            }else if ($selected_user_time < $minimum_margin_time) {
-                return redirect('reservation')->with(['savesAlert' => 'Por favor, seleccione una fecha apropiada con un margen de dos horas', 'class' => 'alert-danger']);
+            if ($selected_user_time < $minimum_margin_time) {
+                return redirect('reservation')->with(['updates' => 'Por favor, seleccione una fecha apropiada con un margen de dos horas', 'class' => 'alert-danger']);
             }
             
             $consulta->date = $request->meetingTime;
@@ -112,9 +109,7 @@ class ReservationController extends Controller
     public function update(Request $request, $id)
     {
         // error_log($id);
-
         try {
-            $is = 200/0;
             $request->validate([
                 'updateUserId' => 'required|string|max:10',
                 'updateUserName' => 'required|string|max:30',
@@ -128,10 +123,18 @@ class ReservationController extends Controller
             $consulta->name = $request->updateUserName;
             $consulta->last_name = $request->updateUserLastName;
             $consulta->pet_name = $request->updateUserPetName;
+            
+            $request_date_time = strtotime(date($consulta->date));
+            $check_date =  strtotime(date('Y-m-d H:i', strtotime('-2 hour', $request_date_time)));
+            $current_time = strtotime(date('Y-m-d H:i'));
+
+            if ($current_time > $check_date) {
+                return redirect('reservation')->with(['updates' => 'No se puede actualizar la fecha', 'class' => 'alert-danger']);
+            }
+            
             $consulta->date = $request->updateMeetingTime;
             $consulta->state = 0;
-
-            //$consulta->update();
+            $consulta->update();
             return redirect('reservation')->with(['updates' => 'Registro actualizado correctamente', 'class' => 'alert-success']);
         } catch (\Throwable $th) {
             return redirect('reservation')->with(['updates' => 'Registro NO actualizado.', 'class' => 'alert-danger']);
