@@ -141,7 +141,13 @@ class ReservationController extends Controller
             }
             
             $consulta->date = $request->updateMeetingTime;
-            $consulta->state = 0;
+            
+            if ($request->updateState == 'on') {
+                $consulta->state = 1;
+            } else {
+                $consulta->state = 0;
+            }
+
             $consulta->update();
             return redirect('reservation')->with(['updates' => 'Registro actualizado correctamente', 'class' => 'alert-success']);
         } catch (\Throwable $th) {

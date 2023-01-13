@@ -146,6 +146,15 @@ $last_date = date('Y-m-d H:i', strtotime('+1 month', strtotime($current_date)));
                                     <input type="text" class="form-control" id="updateUserId" name="updateUserId"
                                         required>
                                 </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="updateState"
+                                        class="col-form-label">{{ __('Cambiar estado:') }}</label>
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" role="switch"
+                                            id="updateState" name="updateState">
+                                        <label class="form-check-label" for="updateState">{{__('Marcar como cancelado')}}</label>
+                                    </div>
+                                </div>
                             </div>
                             <div class="row">
                                 <div class="col mb-3">

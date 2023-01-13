@@ -4,7 +4,13 @@ function updateAppointment(id, cc, name, last_name, pet_name, date, status, url)
     document.getElementById("updateUserLastName").value = last_name;
     document.getElementById("updateUserPetName").value = pet_name;
     document.getElementById("updateMeetingTime").value = date;
-    console.log(date)
+
+    if (status == 0) {
+      document.getElementById("updateState").checked = false;
+    } else {
+      document.getElementById("updateState").checked = true;
+    }
+
     document.getElementById("updateForm").action = url+"/"+id;
 }
 
