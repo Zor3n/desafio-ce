@@ -4,8 +4,8 @@ $last_date = date('Y-m-d H:i', strtotime('+1 month', strtotime($current_date)));
 ?>
 <x-app-layout>
     <div class="container pt-5 pb-5">
-        <!-- Button trigger modal -->
-        <button type="button" class="btn btn-primary my-3" data-bs-toggle="modal" data-bs-target="#save-data-modal">
+
+        <button type="button" class="btn btn-success my-3" data-bs-toggle="modal" data-bs-target="#save-data-modal">
             {{ __('Reservar') }}
         </button>
 
@@ -58,7 +58,7 @@ $last_date = date('Y-m-d H:i', strtotime('+1 month', strtotime($current_date)));
                                 <button type="button" class="btn btn-secondary"
                                     data-bs-dismiss="modal">{{ __('Cerrar') }}</button>
                                 @csrf
-                                <button type="submit" class="btn btn-primary">{{ __('Guardar') }}</button>
+                                <button type="submit" class="btn btn-success">{{ __('Guardar') }}</button>
                             </div>
                         </form>
                     </div>
@@ -84,7 +84,8 @@ $last_date = date('Y-m-d H:i', strtotime('+1 month', strtotime($current_date)));
                 <tbody class="table-group-divider">
                     @foreach ($appointments as $appointment)
                         <?php
-                        $selection = $appointment->id . ",'" . $appointment->id_user . "','" . $appointment->name . "','" . $appointment->last_name . "','" . $appointment->pet_name . "','" . $appointment->date . "'," . $appointment->state . ",'" . url('reservation') . "'";
+                        $update_selection = $appointment->id . ",'" . $appointment->id_user . "','" . $appointment->name . "','" . $appointment->last_name . "','" . $appointment->pet_name . "','" . $appointment->date . "'," . $appointment->state . ",'" . url('reservation') . "'";
+                        $delete_selection = $appointment->id . ",'" . $appointment->id_user . "','" . $appointment->name . "','" . $appointment->date . "','" . url('reservation') . "'";
                         ?>
 
                         <tr>
@@ -99,10 +100,12 @@ $last_date = date('Y-m-d H:i', strtotime('+1 month', strtotime($current_date)));
                             @else
                                 <td>{{ __('CANCELADO') }}</td>
                             @endif
-                            <td><a class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#modalActualizar"
-                                    onclick="updateAppointment(<?php echo $selection; ?>);"
+                            <td><a class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#updateDataModal"
+                                    onclick="updateAppointment(<?php echo $update_selection; ?>);"
                                     role="button">{{ __('EDITAR') }}</a></td>
-                            <td><a class="btn btn-danger" href="" role="button">{{ __('ELIMINAR') }}</a></td>
+                            <td><a class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteDataModal"
+                                    onclick="deleteAppointment(<?php echo $delete_selection; ?>);"
+                                    role="button">{{ __('ELIMINAR') }}</a></td>
                         </tr>
                     @endforeach
                 </tbody>
@@ -123,13 +126,13 @@ $last_date = date('Y-m-d H:i', strtotime('+1 month', strtotime($current_date)));
             {{ $appointments->links() }}
         </div>
 
-        <!--Actualizar Alojamiento-->
-        <div class="modal fade" id="modalActualizar" tabindex="-1" aria-labelledby="modalActualizarLabel"
+
+        <div class="modal fade" id="updateDataModal" tabindex="-1" aria-labelledby="updateDataModalLabel"
             aria-hidden="true">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="modalActualizarLabel">{{ __('ACTUALIZAR CITA') }}</h5>
+                        <h5 class="modal-title" id="updateDataModalLabel">{{ __('ACTUALIZAR CITA') }}</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                             aria-label="Close"></button>
                     </div>
@@ -140,8 +143,8 @@ $last_date = date('Y-m-d H:i', strtotime('+1 month', strtotime($current_date)));
                                 <div class="col-md-6 mb-3">
                                     <label for="updateUserId"
                                         class="col-form-label">{{ __('Actualizar DNI:') }}</label>
-                                    <input type="text" class="form-control" id="updateUserId"
-                                        name="updateUserId" required>
+                                    <input type="text" class="form-control" id="updateUserId" name="updateUserId"
+                                        required>
                                 </div>
                             </div>
                             <div class="row">
@@ -178,17 +181,75 @@ $last_date = date('Y-m-d H:i', strtotime('+1 month', strtotime($current_date)));
                             <button type="button" class="btn btn-secondary"
                                 data-bs-dismiss="modal">{{ __('Cerrar') }}</button>
                             @csrf
-                            <button type="submit" class="btn btn-primary">{{ __('Actualizar') }}</button>
+                            <button type="submit" class="btn btn-warning">{{ __('Actualizar') }}</button>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
+
+
+        <div class="modal fade" id="deleteDataModal" tabindex="-1" aria-labelledby="deleteDataModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="deleteDataModalLabel">
+                            {{ __('¿Eliminar registro?') }}
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                    </div>
+                    <form id="deleteForm" method="POST">
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col mb-3">
+                                    <label for="deleteAppointmentID"
+                                        class="col-form-label">{{ __('DNI:') }}</label>
+                                    <input type="text" class="form-control" id="deleteAppointmentID"
+                                        name="deleteAppointmentID" disabled>
+                                </div>
+                                <div class="col mb-3">
+                                    <label for="deleteAppointmentName"
+                                        class="col-form-label">{{ __('Nombre:') }}</label>
+                                    <input type="text" class="form-control" id="deleteAppointmentName"
+                                        name="deleteAppointmentName" disabled>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="deleteAppointmentDate"
+                                        class="col-form-label">{{ __('Fecha:') }}</label>
+                                    <input type="text" class="form-control" id="deleteAppointmentDate"
+                                        name="deleteAppointmentDate" disabled>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary"
+                                    data-bs-dismiss="modal">{{ __('Cerrar') }}</button>
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger">{{ __('Eliminar') }}</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        @if (session('savesAlert'))
+            <div id="savesAlert" class="alert alert-dismissible fade show {{ session('class') }}" role="alert">
+                {{ session('savesAlert') }}
+                <button type="button" class="btn btn-close ms-5 bg-secondary" data-bs-dismiss="alert"
+                    aria-label="Close">{{ __('Cerrar') }}</button>
+            </div>
+        @endif
+
         @if (session('updates'))
-        <div class="alert alert-dismissible fade show {{session('class')}}" role="alert">
-            {{session('updates')}}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-          </div>
+            <div id="updatesAlert" class="alert alert-dismissible fade show {{ session('class') }}" role="alert">
+                {{ session('updates') }}
+                <button type="button" class="btn btn-close ms-5 bg-secondary" data-bs-dismiss="alert"
+                    aria-label="Close">{{ __('Cerrar') }}</button>
+            </div>
         @endif
     </div>
 </x-app-layout>

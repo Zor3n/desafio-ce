@@ -55,15 +55,24 @@ class ReservationController extends Controller
             $consulta->name = $request->userName;
             $consulta->last_name = $request->userLastName;
             $consulta->pet_name = $request->userPetName;
+
+            $selected_user_time = strtotime($request->meetingTime);
+            $current_time = strtotime(date('Y-m-d H:i'));
+            $minimum_margin_time = strtotime(date('Y-m-d H:i', strtotime('2 hour')));
+
+            if($selected_user_time < $current_time){
+                return redirect('reservation')->with(['savesAlert' => 'Por favor, seleccione una fecha apropiada', 'class' => 'alert-danger']);
+            }else if ($selected_user_time < $minimum_margin_time) {
+                return redirect('reservation')->with(['savesAlert' => 'Por favor, seleccione una fecha apropiada con un margen de dos horas', 'class' => 'alert-danger']);
+            }
+            
             $consulta->date = $request->meetingTime;
             $consulta->state = 0;
-            //return $request;
 
             $consulta->save();
-
-            return redirect('reservation');
+            return redirect('reservation')->with(['updates' => 'Registro creado correctamente', 'class' => 'alert-success']);
         } catch (\Throwable $th) {
-            return redirect('/');
+            return redirect('reservation')->with(['updates' => 'Registro NO añadido.', 'class' => 'alert-danger']);
         }
     }
 
@@ -105,6 +114,7 @@ class ReservationController extends Controller
         // error_log($id);
 
         try {
+            $is = 200/0;
             $request->validate([
                 'updateUserId' => 'required|string|max:10',
                 'updateUserName' => 'required|string|max:30',
@@ -121,15 +131,10 @@ class ReservationController extends Controller
             $consulta->date = $request->updateMeetingTime;
             $consulta->state = 0;
 
-            // $consulta->email = $request->email_edit;
-
-            $consulta->update();
-
-            return redirect('reservation');
-
-            //return redirect()->back();
+            //$consulta->update();
+            return redirect('reservation')->with(['updates' => 'Registro actualizado correctamente', 'class' => 'alert-success']);
         } catch (\Throwable $th) {
-            return redirect('reservation')->with(['updates' => 'Registro NO actualizado.', 'class' => 'text-bg-primary']);
+            return redirect('reservation')->with(['updates' => 'Registro NO actualizado.', 'class' => 'alert-danger']);
             //throw $th; //return redirect()->route('dashboard');
         }
     }
@@ -142,6 +147,12 @@ class ReservationController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try {
+            $consulta = Appointment::find($id);
+            $consulta->delete();
+            return redirect('reservation')->with(['updates' => 'Registro eliminado correctamente', 'class' => 'alert-success']);
+        } catch (\Throwable $th) {
+            return redirect('reservation')->with(['updates' => 'Registro NO se ha eliminado.', 'class' => 'alert-danger']);
+        }
     }
 }
