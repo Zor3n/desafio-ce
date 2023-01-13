@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Appointment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Carbon;
 
 class ReservationController extends Controller
 {
@@ -16,7 +17,7 @@ class ReservationController extends Controller
     public function index()
     {
         return view('content.reservation',[
-            'appointments' => DB::table('appointments')->paginate(1), #all data on table
+            'appointments' => DB::table('appointments')->simplePaginate(5), #all data on table
             // 'users' => Appointment::where('id', '==', 1)->paginate(1), #selected data on table
         ]);
         // return Appointment::all();
@@ -62,7 +63,11 @@ class ReservationController extends Controller
      */
     public function edit($id)
     {
-        //
+        try {
+            $user_ = Appointment::findOrFail($id);
+        } catch (\Throwable $th) {
+            throw $th;
+        }
     }
 
     /**
@@ -74,7 +79,28 @@ class ReservationController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // error_log($id);
+        
+        try {
+            // $request->validate([
+                //     'name_edit' => 'required|string|max:100',
+                //     'email_edit' => 'required|string|email|max:255|unique:users',
+                // ]);
+                
+            $consulta = Appointment::find($id);
+            
+            $consulta->name = $request->updateName;
+            
+            // $consulta->email = $request->email_edit;
+            
+            $consulta->update();
+            
+            return redirect('reservation');
+            
+            //return redirect()->back();
+        } catch (\Throwable $th) {
+            //throw $th; //return redirect()->route('dashboard');
+        }
     }
 
     /**

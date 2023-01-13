@@ -18,7 +18,7 @@ Route::get('/', function () {
     return view('content.welcome');
 });
 
-Route::resource('/reservation', ReservationController::class);
+Route::resource('reservation', ReservationController::class);
 
 Route::get('/search', function () {
     return view('content.search');
