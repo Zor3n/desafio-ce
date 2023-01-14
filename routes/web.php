@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\SearchController;
 use Illuminate\Support\Facades\Route;
@@ -28,6 +29,4 @@ Route::get('/search', function () {
 Route::post('/search', [SearchController::class, 'search']);
 
 
-Route::get('/calendar', function () {
-    return view('content.calendar');
-})->name('calendar');
+Route::get('/calendar', [CalendarController::class, 'get_data'])->name('calendar');
