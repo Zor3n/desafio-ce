@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ReservationController;
+use App\Http\Controllers\SearchController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,6 +24,9 @@ Route::resource('reservation', ReservationController::class);
 Route::get('/search', function () {
     return view('content.search');
 })->name('search');
+
+Route::post('/search', [SearchController::class, 'search']);
+
 
 Route::get('/calendar', function () {
     return view('content.calendar');
