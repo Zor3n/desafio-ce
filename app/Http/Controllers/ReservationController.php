@@ -5,27 +5,32 @@ namespace App\Http\Controllers;
 use App\Models\Appointment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Carbon;
 
 class ReservationController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the resource with paginate.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
         return view('content.reservation', [
-            'appointments' => DB::table('appointments')->simplePaginate(5), 
+            'appointments' => DB::table('appointments')->simplePaginate(5),
         ]);
     }
 
+    /**
+     * Search for resources on db with the given date.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
     public function search(Request $request)
     {
         try {
             $request->validate([
-                'searchDate' => 'required',
+                'searchDate' => 'required|date_format:Y-m-d',
             ]);
 
             $date_to_search = date('Y-m-d', strtotime($request->searchDate));
