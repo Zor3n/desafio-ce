@@ -1,21 +1,20 @@
-## Desafío de desarrollo - Laravel MySQL
+## Desafío de desarrollo - Laravel MySQL Bootstrap FullCalendar
 
 Solución del desafío de desarrollo de CDE.
 
 Proyecto realizado en Laravel utilizando MySQL como base de datos,
 Bootstrap para los estilos y componentes, y FullCalendar para mostrar el calendario.
 
-El desarrollo está conformado por tres páginas: Reservas, buscar y calendario.
+Cuenta con dos páginas: Reservas y Calendario.
 
-Puse algunas restricciones que me parecieron optimas, además de las requeridas por el desafio.
+Reserva de citas veterinarias con los campos requeridos. Además, he adiccionado el estado de la reserva.
 
-En la página de Reservas donde se puede reservar, actualizar y eliminar 
-cada uno de los datos que están en la base de datos.
+Para reservar: Partiendo de uno de los requisitos para actualizar, que la hora
+de la cita debe ser mayor a dos horas, he puesto una restricción para reservar la cita y es que debe ser con
+minimo dos horas de antelación. O sea, ingresando la fecha y hora actual no dejara reservar. 
 
-Para realizar una reserva he puesto una restricción de que solo se pueda hacer dos horas antes
-y solo se puede editar sí el tiempo de la citas es mayor a dos horas de la hora actual.
-Adiccionalmente, sí la fecha ya ha sido seleccionada anteriormente no se podrá reservar. 
+He puesto también algunas restricciones basicas a la entrada de datos, que sean requeridos y con el máximo 
+puesto en la base de datos.
 
-En la página de Buscar, y para separar los requerimientos principales en páginas diferentes,
-se puede buscar las citas realizadas para una fecha puntual. Para ahorrar tiempo no le he puesto las
-funciones de CRUD ya que lo ideal, en realidad, sería unir Reservas y Buscar.
+En el calendario solo se visualizan las citas reservadas y precionando sobre los eventos se muestra
+la información de cada uno de ellos.
