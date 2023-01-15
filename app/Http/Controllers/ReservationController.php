@@ -69,7 +69,7 @@ class ReservationController extends Controller
                 'userName' => 'required|max:30',
                 'userLastName' => 'required|max:30',
                 'userPetName' => 'required|max:30',
-                'meetingTime' => 'required',
+                'meetingTime' => 'required|date_format:Y-m-d\TH:i',
             ]);
 
             $consulta = new Appointment();
@@ -141,7 +141,7 @@ class ReservationController extends Controller
                 'updateUserName' => 'required|string|max:30',
                 'updateUserLastName' => 'required|string|max:30',
                 'updateUserPetName' => 'required|string|max:30',
-                'updateMeetingTime' => 'required',
+                'updateMeetingTime' => 'required|date_format:Y-m-d\TH:i',
             ]);
 
             $consulta = Appointment::find($id);
