@@ -3,7 +3,7 @@ $current_date_search = date('Y-m-d');
 $current_date = date('Y-m-d H:i');
 $last_date = date('Y-m-d H:i', strtotime('+1 month', strtotime($current_date)));
 ?>
-<x-app-layout> 
+<x-app-layout>
     <div class="container pt-5 pb-5">
 
         <div class="row mb-5">
@@ -11,23 +11,22 @@ $last_date = date('Y-m-d H:i', strtotime('+1 month', strtotime($current_date)));
                 <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#save-data-modal">
                     {{ __('Reservar') }}
                 </button>
-                
+
             </div>
             <div class="col">
                 <form class="d-flex" role="search" method="POST" action="{{ url('search') }}">
-                    <input class="form-control mx-3" type="date" id="searchDate" name="searchDate" value="{{ $current_date_search }}"
-                        required>
+                    <input class="form-control mx-3" type="date" id="searchDate" name="searchDate"
+                        value="{{ $current_date_search }}" required>
                     @csrf
-                    <button class="btn btn-outline-success mx-3" type="submit">{{__('Buscar')}}</button>
-                    <a class="btn btn-outline-primary " href="{{route('reservation.index')}}">{{__('Reiniciar')}}</a>
+                    <button class="btn btn-outline-success mx-3" type="submit">{{ __('Buscar') }}</button>
+                    <a class="btn btn-outline-primary "
+                        href="{{ route('reservation.index') }}">{{ __('Reiniciar') }}</a>
                 </form>
-                
             </div>
-            
         </div>
-        
 
-        <div class="modal fade" id="save-data-modal" tabindex="-1" aria-labelledby="saveDataModalLabel" aria-hidden="true">
+        <div class="modal fade" id="save-data-modal" tabindex="-1" aria-labelledby="saveDataModalLabel"
+            aria-hidden="true">
             <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -41,28 +40,28 @@ $last_date = date('Y-m-d H:i', strtotime('+1 month', strtotime($current_date)));
                                 <div class="row">
                                     <div class="col-md-6 mb-3">
                                         <label for="userId" class="col-form-label">{{ __('DNI:') }}</label>
-                                        <input type="text" class="form-control" id="userId" name="userId" maxlength="10"
-                                            required>
+                                        <input type="text" class="form-control" id="userId" name="userId"
+                                            maxlength="10" required>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col mb-3">
                                         <label for="userName" class="col-form-label">{{ __('Nombre:') }}</label>
-                                        <input type="text" class="form-control" id="userName" name="userName" maxlength="30"
-                                            required>
+                                        <input type="text" class="form-control" id="userName" name="userName"
+                                            maxlength="30" required>
                                     </div>
                                     <div class="col mb-3">
                                         <label for="userLastName" class="col-form-label">{{ __('Apellido:') }}</label>
-                                        <input type="text" class="form-control" id="userLastName" name="userLastName" maxlength="30"
-                                            required>
+                                        <input type="text" class="form-control" id="userLastName" name="userLastName"
+                                            maxlength="30" required>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col mb-3">
                                         <label for="userPetName"
                                             class="col-form-label">{{ __('Nombre de la mascota:') }}</label>
-                                        <input type="text" class="form-control" id="userPetName" name="userPetName" maxlength="30"
-                                            required>
+                                        <input type="text" class="form-control" id="userPetName" name="userPetName"
+                                            maxlength="30" required>
                                     </div>
                                     <div class="col mb-3">
                                         <label for="meetingTime">{{ __('Seleccionar fecha:') }}</label>
@@ -150,8 +149,8 @@ $last_date = date('Y-m-d H:i', strtotime('+1 month', strtotime($current_date)));
                                 <div class="col-md-6 mb-3">
                                     <label for="updateUserId"
                                         class="col-form-label">{{ __('Actualizar DNI:') }}</label>
-                                    <input type="text" class="form-control" id="updateUserId" name="updateUserId" maxlength="10"
-                                        required>
+                                    <input type="text" class="form-control" id="updateUserId" name="updateUserId"
+                                        maxlength="10" required>
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <label for="updateState"
@@ -174,8 +173,8 @@ $last_date = date('Y-m-d H:i', strtotime('+1 month', strtotime($current_date)));
                                 <div class="col mb-3">
                                     <label for="updateUserLastName"
                                         class="col-form-label">{{ __('Actualizar apellido:') }}</label>
-                                    <input type="text" class="form-control" id="updateUserLastName" maxlength="30"
-                                        name="updateUserLastName" required>
+                                    <input type="text" class="form-control" id="updateUserLastName"
+                                        maxlength="30" name="updateUserLastName" required>
                                 </div>
                             </div>
                             <div class="row">
