@@ -1,3 +1,7 @@
+<?php
+$current_date = date('Y-m-d H:i');
+$last_date = date('Y-m-d H:i', strtotime('+1 month', strtotime($current_date)));
+?>
 <script>
     var calendar_data = {!! json_encode($data) !!};
     document.addEventListener('DOMContentLoaded', function() {
@@ -9,7 +13,10 @@
                 center: '',
                 end: 'dayGridMonth,timeGridWeek,timeGridDay today prev,next'
             },
-            events: calendar_data
+            eventSources: [{
+                events: calendar_data,
+                color: '#206f4d'
+            }]
         });
         calendar.render();
     });

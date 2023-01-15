@@ -28,5 +28,4 @@ Route::get('/search', function () {
 
 Route::post('/search', [SearchController::class, 'search']);
 
-
 Route::get('/calendar', [CalendarController::class, 'get_data'])->name('calendar');
