@@ -16,7 +16,10 @@ $last_date = date('Y-m-d H:i', strtotime('+1 month', strtotime($current_date)));
             eventSources: [{
                 events: calendar_data,
                 color: '#206f4d'
-            }]
+            }],
+            eventClick: function(info) {
+                alert('Cita: ' + info.event.title + ' \nHora: ' + info.event.start);
+            }
         });
         calendar.render();
     });
