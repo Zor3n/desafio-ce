@@ -78,8 +78,8 @@ $current_date = date('Y-m-d');
                 role="alert">
                 {{ session('results') }}
                 {{ session('error') }}
-                <button type="button" class="btn btn-close ms-5 bg-secondary" data-bs-dismiss="alert"
-                    aria-label="Close">{{ __('Cerrar') }}</button>
+                <button type="button" class="btn btn-close ms-5" data-bs-dismiss="alert"
+                    aria-label="Close"></button>
             </div>
         @endif
     </div>

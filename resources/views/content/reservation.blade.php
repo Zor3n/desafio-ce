@@ -152,7 +152,8 @@ $last_date = date('Y-m-d H:i', strtotime('+1 month', strtotime($current_date)));
                                     <div class="form-check form-switch">
                                         <input class="form-check-input" type="checkbox" role="switch"
                                             id="updateState" name="updateState">
-                                        <label class="form-check-label" for="updateState">{{__('Marcar como cancelado')}}</label>
+                                        <label class="form-check-label"
+                                            for="updateState">{{ __('Marcar como cancelado') }}</label>
                                     </div>
                                 </div>
                             </div>
@@ -248,8 +249,8 @@ $last_date = date('Y-m-d H:i', strtotime('+1 month', strtotime($current_date)));
         @if (session('updates'))
             <div id="updatesAlert" class="alert alert-dismissible fade show {{ session('class') }}" role="alert">
                 {{ session('updates') }}
-                <button type="button" class="btn btn-close ms-5 bg-secondary" data-bs-dismiss="alert"
-                    aria-label="Close">{{ __('Cerrar') }}</button>
+                <button type="button" class="btn btn-close ms-5" data-bs-dismiss="alert"
+                    aria-label="Close"></button>
             </div>
         @endif
     </div>

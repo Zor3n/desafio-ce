@@ -4,6 +4,11 @@
         var calendarEl = document.getElementById('calendar');
         var calendar = new FullCalendar.Calendar(calendarEl, {
             initialView: 'dayGridMonth',
+            headerToolbar: {
+                start: 'title',
+                center: '',
+                end: 'dayGridMonth,timeGridWeek,timeGridDay today prev,next'
+            },
             events: calendar_data
         });
         calendar.render();

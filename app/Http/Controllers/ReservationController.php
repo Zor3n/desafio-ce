@@ -63,10 +63,10 @@ class ReservationController extends Controller
                 return redirect('reservation')->with(['updates' => 'Por favor, seleccione una fecha apropiada con un margen de dos horas', 'class' => 'alert-danger']);
             }
 
-            if ($this -> checkAppointmentDate($request->meetingTime) == false) {
+            if ($this->checkAppointmentDate($request->meetingTime) == false) {
                 return redirect('reservation')->with(['updates' => 'Fecha ingresada no disponible', 'class' => 'alert-danger']);
             }
-            
+
             $consulta->date = $request->meetingTime;
             $consulta->state = 0;
 
@@ -127,21 +127,25 @@ class ReservationController extends Controller
             $consulta->name = $request->updateUserName;
             $consulta->last_name = $request->updateUserLastName;
             $consulta->pet_name = $request->updateUserPetName;
-            
-            $request_date_time = strtotime(date($consulta->date));
-            $check_date =  strtotime(date('Y-m-d H:i', strtotime('-2 hour', $request_date_time)));
+
+            $current_date_time = strtotime(date($consulta->date));
+            $request_date_time = strtotime(date($request->updateMeetingTime));
+            $check_date =  strtotime(date('Y-m-d H:i', strtotime('-2 hour', $current_date_time)));
             $current_time = strtotime(date('Y-m-d H:i'));
 
-            if ($current_time > $check_date) {
-                return redirect('reservation')->with(['updates' => 'No se puede actualizar la fecha', 'class' => 'alert-danger']);
+
+            if ($current_date_time != $request_date_time) {
+                if ($current_time > $check_date) {
+                    return redirect('reservation')->with(['updates' => 'No se puede actualizar la fecha', 'class' => 'alert-danger']);
+                }
+
+                if ($this->checkAppointmentDate($request->updateMeetingTime) == false) {
+                    return redirect('reservation')->with(['updates' => 'Fecha ingresada no disponible', 'class' => 'alert-danger']);
+                }
             }
 
-            if ($this -> checkAppointmentDate($request->updateMeetingTime) == false) {
-                return redirect('reservation')->with(['updates' => 'Fecha ingresada no disponible', 'class' => 'alert-danger']);
-            }
-            
             $consulta->date = $request->updateMeetingTime;
-            
+
             if ($request->updateState == 'on') {
                 $consulta->state = 1;
             } else {
@@ -173,12 +177,13 @@ class ReservationController extends Controller
         }
     }
 
-    private static function checkAppointmentDate($date){
+    private static function checkAppointmentDate($date)
+    {
         try {
             $format_date = date('Y-m-d H:i', strtotime($date));
             $consulta = Appointment::where('date', '=', $format_date);
-            
-            if($consulta -> count() > 0){
+
+            if ($consulta->count() > 0) {
                 return false;
             }
             return true;
