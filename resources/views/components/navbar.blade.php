@@ -8,13 +8,10 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-                <a class="nav-link text-dark bg-light px-5 mx-2 border rounded" href="{{route('reservation.index')}}">{{ __('Reservas') }}<span class="sr-only">(current)</span></a>
+                <a class="nav-link text-light px-3 mx-2 border-bottom rounded" href="{{route('reservation.index')}}">{{ __('Reservas') }}<span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-dark bg-light px-5 mx-2 border rounded" href="{{route('search')}}">{{ __('Buscar') }}</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link text-dark bg-light px-5 mx-2 border rounded" href="{{route('calendar')}}">{{ __('Calendario') }}</a>
+                <a class="nav-link text-light px-3 mx-2 border-bottom rounded" href="{{route('calendar')}}">{{ __('Calendario') }}</a>
             </li>
         </ul>
     </div>

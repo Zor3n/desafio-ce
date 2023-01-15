@@ -17,10 +17,32 @@ class ReservationController extends Controller
     public function index()
     {
         return view('content.reservation', [
-            'appointments' => DB::table('appointments')->simplePaginate(5), #all data on table
-            // 'users' => Appointment::where('id', '==', 1)->paginate(1), #selected data on table
+            'appointments' => DB::table('appointments')->simplePaginate(5), 
         ]);
-        // return Appointment::all();
+    }
+
+    public function search(Request $request)
+    {
+        try {
+            $request->validate([
+                'searchDate' => 'required',
+            ]);
+
+            $date_to_search = date('Y-m-d', strtotime($request->searchDate));
+            $dates = DB::table('appointments')
+                ->where('date', 'like', '%' . $date_to_search . '%')
+                ->get();
+
+            if ($dates->count() > 0) {
+                return view('content.reservation', [
+                    'appointments' => $dates,
+                ]);
+            } else {
+                return redirect('reservation')->with(['updates' => 'No se encontraron citas', 'class' => 'alert-warning']);
+            }
+        } catch (\Throwable $th) {
+            return redirect('reservation')->with(['updates' => 'Hubo un error interno', 'class' => 'alert-danger']);
+        }
     }
 
     /**

@@ -7,10 +7,9 @@
                 <br>
                 <p class="card-text fs-5">
                     Buenas, este es mi solución del desafío de desarrollo.
-                    Proyecto realizado en Laravel utilizando MySQL como base de datos y
-                    Bootstrap para los estilos y componentes.
-                    <br>
-                    He hecho una página por cada uno de los requerimientos del desafío. 
+                    Proyecto realizado en Laravel utilizando MySQL como base de datos,
+                    Bootstrap para los estilos y componentes, y FullCalendar para mostrar el calendario.
+                    <br> 
                 </p>
                 <a href="https://github.com/Zor3n/desafio-ce" class="card-link fs-5" target="_blank">Código en GitHub</a>
             </div>

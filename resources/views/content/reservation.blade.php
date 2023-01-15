@@ -1,13 +1,31 @@
 <?php
+$current_date_search = date('Y-m-d');
 $current_date = date('Y-m-d H:i');
 $last_date = date('Y-m-d H:i', strtotime('+1 month', strtotime($current_date)));
 ?>
-<x-app-layout>
+<x-app-layout> 
     <div class="container pt-5 pb-5">
 
-        <button type="button" class="btn btn-success my-3" data-bs-toggle="modal" data-bs-target="#save-data-modal">
-            {{ __('Reservar') }}
-        </button>
+        <div class="row mb-5">
+            <div class="col">
+                <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#save-data-modal">
+                    {{ __('Reservar') }}
+                </button>
+                
+            </div>
+            <div class="col">
+                <form class="d-flex" role="search" method="POST" action="{{ url('search') }}">
+                    <input class="form-control mx-3" type="date" id="searchDate" name="searchDate" value="{{ $current_date_search }}"
+                        required>
+                    @csrf
+                    <button class="btn btn-outline-success mx-3" type="submit">{{__('Buscar')}}</button>
+                    <a class="btn btn-outline-success " href="{{route('reservation.index')}}">{{__('Reiniciar')}}</a>
+                </form>
+                
+            </div>
+            
+        </div>
+        
 
         <div class="modal fade" id="save-data-modal" tabindex="-1" aria-labelledby="saveDataModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
@@ -123,7 +141,9 @@ $last_date = date('Y-m-d H:i', strtotime('+1 month', strtotime($current_date)));
                     </tr>
                 </tfoot>
             </table>
-            {{ $appointments->links() }}
+            @if ($appointments instanceof \Illuminate\Pagination\AbstractPaginator)
+                {{ $appointments->links() }}
+            @endif
         </div>
 
 
