@@ -8,6 +8,13 @@ use Illuminate\Support\Facades\DB;
 
 class CalendarController extends Controller
 {
+    /**
+     * This method is used to get the data from de db for the calendar.
+     * This method change the object from the db to an array that the Full Calendar API can read and use
+     * to create events.
+     * 
+     * @return \Illuminate\Http\Response
+     */
     public function get_data()
     {
         try {
