@@ -19,7 +19,7 @@ $last_date = date('Y-m-d H:i', strtotime('+1 month', strtotime($current_date)));
                         required>
                     @csrf
                     <button class="btn btn-outline-success mx-3" type="submit">{{__('Buscar')}}</button>
-                    <a class="btn btn-outline-success " href="{{route('reservation.index')}}">{{__('Reiniciar')}}</a>
+                    <a class="btn btn-outline-primary " href="{{route('reservation.index')}}">{{__('Reiniciar')}}</a>
                 </form>
                 
             </div>
@@ -41,19 +41,19 @@ $last_date = date('Y-m-d H:i', strtotime('+1 month', strtotime($current_date)));
                                 <div class="row">
                                     <div class="col-md-6 mb-3">
                                         <label for="userId" class="col-form-label">{{ __('DNI:') }}</label>
-                                        <input type="text" class="form-control" id="userId" name="userId"
+                                        <input type="text" class="form-control" id="userId" name="userId" maxlength="10"
                                             required>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col mb-3">
                                         <label for="userName" class="col-form-label">{{ __('Nombre:') }}</label>
-                                        <input type="text" class="form-control" id="userName" name="userName"
+                                        <input type="text" class="form-control" id="userName" name="userName" maxlength="30"
                                             required>
                                     </div>
                                     <div class="col mb-3">
                                         <label for="userLastName" class="col-form-label">{{ __('Apellido:') }}</label>
-                                        <input type="text" class="form-control" id="userLastName" name="userLastName"
+                                        <input type="text" class="form-control" id="userLastName" name="userLastName" maxlength="30"
                                             required>
                                     </div>
                                 </div>
@@ -61,7 +61,7 @@ $last_date = date('Y-m-d H:i', strtotime('+1 month', strtotime($current_date)));
                                     <div class="col mb-3">
                                         <label for="userPetName"
                                             class="col-form-label">{{ __('Nombre de la mascota:') }}</label>
-                                        <input type="text" class="form-control" id="userPetName" name="userPetName"
+                                        <input type="text" class="form-control" id="userPetName" name="userPetName" maxlength="30"
                                             required>
                                     </div>
                                     <div class="col mb-3">
@@ -127,19 +127,6 @@ $last_date = date('Y-m-d H:i', strtotime('+1 month', strtotime($current_date)));
                         </tr>
                     @endforeach
                 </tbody>
-                <tfoot>
-                    <tr>
-                        <th scope="col">{{ __('#') }}</th>
-                        <th scope="col">{{ __('DNI') }}</th>
-                        <th scope="col">{{ __('NOMBRE') }}</th>
-                        <th scope="col">{{ __('APELLIDO') }}</th>
-                        <th scope="col">{{ __('NOMBRE MASCOTA') }}</th>
-                        <th scope="col">{{ __('FECHA CITA') }}</th>
-                        <th scope="col">{{ __('ESTADO') }}</th>
-                        <th scope="col"></th>
-                        <th scope="col"></th>
-                    </tr>
-                </tfoot>
             </table>
             @if ($appointments instanceof \Illuminate\Pagination\AbstractPaginator)
                 {{ $appointments->links() }}
@@ -163,7 +150,7 @@ $last_date = date('Y-m-d H:i', strtotime('+1 month', strtotime($current_date)));
                                 <div class="col-md-6 mb-3">
                                     <label for="updateUserId"
                                         class="col-form-label">{{ __('Actualizar DNI:') }}</label>
-                                    <input type="text" class="form-control" id="updateUserId" name="updateUserId"
+                                    <input type="text" class="form-control" id="updateUserId" name="updateUserId" maxlength="10"
                                         required>
                                 </div>
                                 <div class="col-md-6 mb-3">
@@ -181,13 +168,13 @@ $last_date = date('Y-m-d H:i', strtotime('+1 month', strtotime($current_date)));
                                 <div class="col mb-3">
                                     <label for="updateUserName"
                                         class="col-form-label">{{ __('Actualizar nombre:') }}</label>
-                                    <input type="text" class="form-control" id="updateUserName"
+                                    <input type="text" class="form-control" id="updateUserName" maxlength="30"
                                         name="updateUserName" required>
                                 </div>
                                 <div class="col mb-3">
                                     <label for="updateUserLastName"
                                         class="col-form-label">{{ __('Actualizar apellido:') }}</label>
-                                    <input type="text" class="form-control" id="updateUserLastName"
+                                    <input type="text" class="form-control" id="updateUserLastName" maxlength="30"
                                         name="updateUserLastName" required>
                                 </div>
                             </div>
@@ -195,7 +182,7 @@ $last_date = date('Y-m-d H:i', strtotime('+1 month', strtotime($current_date)));
                                 <div class="col mb-3">
                                     <label for="updateUserPetName"
                                         class="col-form-label">{{ __('Actualizar nombre de la mascota:') }}</label>
-                                    <input type="text" class="form-control" id="updateUserPetName"
+                                    <input type="text" class="form-control" id="updateUserPetName" maxlength="30"
                                         name="updateUserPetName" required>
                                 </div>
                                 <div class="col mb-3">
