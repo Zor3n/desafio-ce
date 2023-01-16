@@ -161,11 +161,11 @@ class ReservationController extends Controller
             $current_time = strtotime(date('Y-m-d H:i'));
 
 
+            if ($current_time > $check_date) {
+                return redirect('reservation')->with(['updates' => 'No se puede actualizar la fecha con menos de dos horas para la cita.', 'class' => 'alert-danger']);
+            }
+            
             if ($current_date_time != $request_date_time) {
-                if ($current_time > $check_date) {
-                    return redirect('reservation')->with(['updates' => 'No se puede actualizar la fecha con menos de dos horas para la cita.', 'class' => 'alert-danger']);
-                }
-
                 if ($this->checkAppointmentDate($request->updateMeetingTime) == false) {
                     return redirect('reservation')->with(['updates' => 'Fecha ingresada no disponible.', 'class' => 'alert-danger']);
                 }
